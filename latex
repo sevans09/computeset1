@@ -1,0 +1,139 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{hyperref}
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+ 
+\lstdefinestyle{Python}{
+    language        = Python,
+    frame           = lines, 
+    basicstyle      = \footnotesize,
+    keywordstyle    = \color{blue},
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+\newcommand\course{EE 24}           
+\newcommand\NetIDb{Sook-Hee Evans}          
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa}
+\lhead{\NetIDa\\\NetIDb}              
+\chead{\textbf{\Large Compute Set 1 \hwnumber}}
+\rhead{\course \\ \today}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+\usepackage{listings}
+\usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+\definecolor{backcolor}{rgb}{0.95,0.95,0.96}
+
+\lstset{%
+    basicstyle=\color{red},
+    basicstyle= 10pt,
+    basicstyle = \footnotesize,
+    breaklines=true,%
+    breakatwhitespace = false,
+    captionpos = b,
+    keepspaces = false,
+    backgroundcolor = \color{backcolor},
+    morekeywords={matlab2tikz},
+    keywordstyle=\small\color{blue},%
+    morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+    identifierstyle=\color{black},%
+    stringstyle=\small\color{mylilas},
+    commentstyle=\small\color{mygreen},
+    showstringspaces=false,%without this there will be a symbol in the places where there is a space
+    numbers=left,%
+    numberstyle={\tiny \color{black}},% size of the numbers
+    numbersep=8pt, % this defines how far the numbers are from the text
+    emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
+    emph=[2]{word1,word2}, emphstyle=[2]{style},    
+}
+
+\begin{document}
+Acknowledgements: I worked with Sejal Dua on problems 2-4 and Matt Manfre on scripting problem 5.
+
+\section*{Problem 1}
+   MATLAB code below.
+\lstinputlisting[language=Matlab]{computeHist.m}
+
+\section*{Problem 2}
+By running my computeHist function with N = 500 random integers and using fprintf to print the mean of the set at the end of the function, I found that the average, as expected, was about 70.5 characters. I ran five trials, and the mean lengths for each of those trials were 70.17, 71.03, 71.18, 70.71, and 70.35. Because the lengths of the tweets are integers distributed randomly from 1-140, it makes sense that the average number of characters would hover around 70.5 for an experiment based on 500 tweets.
+\begin{center}
+\includegraphics[scale = 0.4]{ss}
+\end{center}
+\begin{center}
+\scriptsize Figure 1: Partial output for 500 tweets.
+\end{center}
+
+\section*{Problem 3}
+Compared to a histogram with 100 tweets, the histogram with 500 tweets is much more even. This makes sense, since as the number of elements of the data set go up, the sample variance goes down. Because a set with less than at least 140 random integers will always have at least one bin with zero occurrences, small sets have gaps in the histogram that a larger set will have much less of or even possibly lack completely.
+\begin{center}
+\includegraphics[scale = 0.4]{fig1}
+\includegraphics[scale = 0.4]{fig2}
+\end{center}
+\begin{center}
+\scriptsize Figure 2 and 3. On the left, a histogram of 500 tweets and on the right, a histogram of 100 tweets. As number of tweets increases, the histogram will become more and more even.
+\end{center}
+
+\section*{Problem 4}
+In theory, about 41 in 140 tweets should be greater than or equal to 100 characters, since 100 is included`. As the number of tweets increases, the number of tweets greater than or equal to 100 characters will become closer and closer to that fraction as the sample variance decreases. As seen above, I used a counter to count the total number of tweets greater than or equal to 100 characters and printed that to the terminal each run. The values for 5 trials are below:
+\[\frac{39}{140}\]
+\[\frac{38}{140}\]
+\[\frac{37}{140}\]
+\[\frac{40}{140}\]
+\[\frac{43}{140}\]
+\newline
+These five values average to about 0.281, and 41 in 140 is about 0.293. These values are expected.
+\newline
+\newline
+\section*{Problem 5}
+MATLAB function and script below.
+\newline{}
+
+\lstinputlisting[language=Matlab]{moreThan100.m}
+\lstinputlisting[language=Matlab]{histScript.m}
+\begin{center}
+\includegraphics[scale = 0.4]{ErrorBar}
+\includegraphics[scale = 0.4]{loglog}
+\end{center}
+\begin{center}
+\scriptsize Figure 4 and 5. On the left, the error bar plot with the sample standard mean. On the right, the log-log scale plot of the sample mean of the error versus N. The slope of the log-log plot was about -0.507.
+\end{center}
+\begin{center}
+\includegraphics[scale = 0.6]{output}
+\end{center}
+
+\begin{center}
+\scriptsize Output of histScript showing the slope of the log-log plot. Sample var showed a large decrease from the first N samples to the last shown above.
+\newline{}
+\newline{}
+\newline{}
+\newline{}
+\end{center}
+
+To test what factor increase of the size of the data set would cut the average error in half, I solved the line equation given by the slope of the log plot, which came out to be log(y) = -0.5(log(x)) - 1.04. To half log(y), the right side of the equation should be doubled to be log(y) = -(log(x)) - 2.08. By using a system of equations, 4 is found because it halves the error. This was tested in histScript and verified that the average error was halved by quadrupling the size of the test data.
+\end{document}
